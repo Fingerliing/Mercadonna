@@ -25,6 +25,10 @@ h1,h2,h3,h4,h5,h6{
 	border-radius: 0 0 4px 4px;
 }
 
+.price{
+    display: inline-block;
+}
+
 .bg-dark{
 	background-color: #4f868c!important;
 }
