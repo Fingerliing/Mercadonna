@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
+PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 # Create your models here.
 
 class Customer(models.Model):
@@ -12,9 +14,27 @@ class Customer(models.Model):
         return self.name
     
 class Product(models.Model):
+    CATEGORY = [
+       ("BIO", "Bio et écologie"),
+       ("FRUITS_ET_LEGUMES", "Fruits et légumes"),
+       ("VIANDE_ET_POISSON", "Viande et poisson"),
+       ("PAIN_ET_PATISSERIE", "Pain et pâtisseries"),
+       ("FRAIS", "Produits frais"),
+       ("SURGELE", "Surgelés"),
+       ("BOISSONS", "Boissons"),
+       ("EPICERIE_SALEE", "Epicerie salée"),
+       ("EPICERIE_SUCREE", "Epicerie sucrée"),
+       ("PRODUITS_DU_MONDE", "Produits du monde"),
+   ]
+   
     name = models.CharField(max_length=200, null=True)
+    description = models.CharField(max_length=500, null=True)
     price = models.FloatField()
-    digital = models.BooleanField(default=False, null=True, blank=False)
+    category = models.CharField(
+       max_length=32,
+       choices=CATEGORY,
+       null=True
+   )
 
     def __str__(self):
         return self.name
@@ -46,3 +66,12 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.adress
+    
+class Sales(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    percentage = models.DecimalField(max_digits=3, decimal_places=0, validators=PERCENTAGE_VALIDATOR)
+
+
+
