@@ -1,6 +1,23 @@
 {% extends 'store/index.html' %}
 {% load static %}
 {% block content %}
+    <div class="col-lg-3 orderlg-first col-md-12 col-md-last category-products">
+        <div class="shop-sidebar-wrap">
+            <div class="sidebar-widget">
+                <h4 class="sidebar-title">Catégorie</h4>
+                <div class="sidebar-widget-category">
+                    <ul>
+                        <li><a href="/" class="selected m-0"> Tous</a></li>
+                        {% for cat in categories %}
+                        <li><a href="/?categories={{cat.id}}"> {{cat.name}}</a></li>
+                        {% endfor %}
+                    </ul>    
+                </div>
+            </div>      
+        </div>
+        
+        category
+    </div>
     <div class="row">
         {% for product in products %}
         <div class="col-lg-4">

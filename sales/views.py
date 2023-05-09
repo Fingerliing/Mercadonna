@@ -4,9 +4,20 @@ from .models import *
 # Create your views here.
 
 def store(request):
-    products = Product.objects.all()
+    
+    categories = Category.objects.all()
 
-    context = {'products':products}
+    CATID = request.GET.get('categories')
+    
+    if CATID:
+        products = Product.objects.filter(category_id = CATID)
+    else:
+        products = Product.objects.all()
+    
+    context = {
+        'products':products,
+        'categories':categories,        
+        }
     return render(request, 'store/store.html', context)
 
 def cart(request):

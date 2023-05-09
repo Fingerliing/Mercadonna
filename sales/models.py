@@ -13,7 +13,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
     
-class Product(models.Model):
+class Category(models.Model):   
     CATEGORY = [
        ("BIO", "Bio et écologie"),
        ("FRUITS_ET_LEGUMES", "Fruits et légumes"),
@@ -26,18 +26,19 @@ class Product(models.Model):
        ("EPICERIE_SUCREE", "Epicerie sucrée"),
        ("PRODUITS_DU_MONDE", "Produits du monde"),
    ]
-   
-    name = models.CharField(max_length=200, null=True)
-    description = models.CharField(max_length=500, null=True)
-    price = models.FloatField()
-    category = models.CharField(
-       max_length=32,
-       choices=CATEGORY,
-       null=True
-   )
+    name = models.CharField(max_length=32, choices=CATEGORY, null=True)
 
     def __str__(self):
         return self.name
+    
+class Product(models.Model):       
+    name = models.CharField(max_length=200, null=True)
+    description = models.CharField(max_length=500, null=True)
+    price = models.FloatField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default="")
+
+    def __str__(self):
+        return self.name    
     
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
