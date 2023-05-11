@@ -43,13 +43,15 @@ h1,h2,h3,h4,h5,h6{
 .show {
 	display: block;
 }
+
 .price{
     display: inline-block;
 }
 
-.saleprice{
+.newprice{
     display: inline-block;
-	color: red;
+	font-style: bold!important;
+	color: red!important;
 }
 
 .bg-dark{
@@ -137,6 +139,8 @@ h1,h2,h3,h4,h5,h6{
 .chg-quantity:hover{
 	opacity: .6;
 }
+
+.sidebar
 
 .hidden{
 	display: none!important;
