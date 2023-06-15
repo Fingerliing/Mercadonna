@@ -34,6 +34,7 @@ pip install django
 4. Créer une nouvelle base de données dans PostgreSql
 5. Créer un fichier .env
 6. Ajouter les données suivantes à l'intérieur 
+
 SECRET_KEY = La clé secrète django à ne pas divulguer en tant normal --> django-insecure-g53fmjgz#f2q4mcfl-o*jimlqc@l#sxdw7&@(xlim0mo*54z^p
 
 DB_NAME = Le nom de votre base de donnée créée dans PostgreSql
