@@ -10,13 +10,13 @@ def store(request):
     CATID = request.GET.get('categories')
     
     if CATID:
-        products = Product.objects.filter(category_id = CATID)
+        products = Product.objects.filter(category_id=CATID)
     else:
         products = Product.objects.all()
-    
+        
     context = {
         'products':products,
-        'categories':categories,        
+        'categories':categories,
         }
     return render(request, 'store/store.html', context)
 

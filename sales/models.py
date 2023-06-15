@@ -30,15 +30,44 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+class Sales(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    percentage = models.PositiveIntegerField(validators=PERCENTAGE_VALIDATOR)
+
+    def __str__(self):
+        return self.name
     
 class Product(models.Model):       
     name = models.CharField(max_length=200, null=True)
     description = models.CharField(max_length=500, null=True)
+    image = models.ImageField(null=True, blank=True)
     price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default="")
+    sales = models.ForeignKey(Sales, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name    
+    
+    @property
+    def imageUrl(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
+    @property
+    def discounted_price(self):
+        if self.sales:
+            discount = self.price * self.sales.percentage / 100
+            return self.price - discount
+        else:
+            return self.price
+    
+
     
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
@@ -68,11 +97,6 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return self.adress
     
-class Sales(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
-    percentage = models.DecimalField(max_digits=3, decimal_places=0, validators=PERCENTAGE_VALIDATOR)
 
 
 
